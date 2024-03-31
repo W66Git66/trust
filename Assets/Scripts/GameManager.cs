@@ -16,23 +16,24 @@ public class GameManager : Singleton<GameManager>
     }
     public SceneStats _curStats;
 
-    private float bossAttackTime;
+    [SerializeField]private float bossAttackTime=5f;
     private float PlayerWaitTime;
 
-    private bool isBossRound1 = false;//boss是否可以行动
+    private bool isBossRound1 = true;//boss是否可以行动
     private bool isBossRound2 = false;
     private bool isPlayer1 = true;
     private bool isPlayer2 = true;//玩家是否可以行动
 
-    private Card c1, c2;//用来存储除boss卡外的两张普通卡
-    private Card bossCard;//boss选择的卡牌
-    private Card specialCard;//特殊卡
-    private Card playerCard1;//玩家一选择的卡牌
-    private Card playerCard2;//玩家二选择的卡牌
+    private GameObject c1, c2;//用来存储除boss卡外的两张普通卡
+    private GameObject bossCard;//boss选择的卡牌
+    private GameObject specialCard;//特殊卡
+    private GameObject playerCard1;//玩家一选择的卡牌
+    private GameObject playerCard2;//玩家二选择的卡牌
 
     private void Update()
     {
-        
+        Round();
+
     }
 
     private void Round()
@@ -42,13 +43,17 @@ public class GameManager : Singleton<GameManager>
             case SceneStats.BossRound1:
                 if (isBossRound1)
                 {
-                    bossAttackTime-=Time.deltaTime;
-                    bossCard = CardManager.Instance.GetNormalCard(out c1, out c2);
-                    if(bossAttackTime < 0)
+                    bossAttackTime -= Time.deltaTime;
+
+                    if (bossAttackTime < 0)
                     {
+                        bossAttackTime = 3f;//怪物攻击间隔
+                        isBossRound1 = false;
+                        bossCard = CardManager.Instance.GetNormalCard(out c1, out c2);
+                        specialCard = CardManager.Instance.GetSpecialCard();
+
+                        moveCard();
                         _curStats = SceneStats.PlayerRound;
-                        bossAttackTime = 5f;
-                        Debug.Log("boss回合结束");
                     }
                 }
                 break;
@@ -60,47 +65,149 @@ public class GameManager : Singleton<GameManager>
                 {
                     if(Input.GetKeyDown(KeyCode.A))
                     {
-                        Debug.Log("1选择第一张牌");
-                        isPlayer1=false;
+                        isPlayer1 = false;
+                        playerCard1 = c1;
                     }
                     if (Input.GetKeyDown(KeyCode.W))
                     {
-                        Debug.Log("1选择第二张牌");
                         isPlayer1 = false;
+                        playerCard1 = c2;
                     }
                     if (Input.GetKeyDown(KeyCode.D))
                     {
-                        Debug.Log("1选择第三张牌");
                         isPlayer1 = false;
+                        playerCard1 = specialCard;
                     }
                 }
                 if (isPlayer2)
                 {
                     if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
-                        Debug.Log("2选择第一张牌");
-                        isPlayer1 = false;
+                        isPlayer2 = false;
+                        playerCard2 = c1;
                     }
                     if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
-                        Debug.Log("2选择第二张牌");
-                        isPlayer1 = false;
+                        isPlayer2 = false;
+                        playerCard2 = c2;
                     }
                     if (Input.GetKeyDown(KeyCode.RightArrow))
-                    {
-                        Debug.Log("2选择第三张牌");
-                        isPlayer1 = false;
+                    {   
+                        isPlayer2 = false;
+                        playerCard2 = specialCard; 
                     }
                 }
-                if(isPlayer1==false&&isPlayer2==false)
+                if (isPlayer1 == false && isPlayer2 == false)
                 {
-                    if(UIManager.Instance.bossStats.)
-                    _curStats = SceneStats.BossRound1;
+                    isPlayer1 = true;
+                    isPlayer2 = true;
+                    isBossRound1 = true;
+                    isBossRound2=true;
+                    StartCoroutine(BossHp());
                 }
                 break;
         }
     }
+    IEnumerator BossHp()
+    {
+        
+        if (UIManager.Instance.bossStats._curHp > UIManager.Instance.bossStats._MaxHp / 2)
+        {
+            yield return new WaitForSeconds(1f);
+             _curStats = SceneStats.BossRound1;
+        }
+        else
+        {   
+            yield return new WaitForSeconds(1f);
+            _curStats = SceneStats.BossRound2;           
+        }
+        judgeBossAttack();
+        ReturnCard();
+    }
+    
+    private void ReturnCard()
+    {
+        LeanTween.rotate(c1, new Vector3(-45, 0, -45f), 1.5f).setEaseInOutBack();
+        LeanTween.moveLocal(c1, new Vector3(0, 0, 0), 1.5f).setEaseInOutBack();
+        LeanTween.rotate(c2, new Vector3(-45, 0, -45f), 1.5f).setEaseInOutBack();
+        LeanTween.moveLocal(c2, new Vector3(0, 0, 0), 1.5f).setEaseInOutBack();
+        LeanTween.rotate(specialCard, new Vector3(-45, 0, -45f), 1.5f).setEaseInOutBack();
+        LeanTween.moveLocal(specialCard, new Vector3(0, 0, 0), 1.5f).setEaseInOutBack();
+    }
+    private void moveCard()
+    {
+        LeanTween.rotate(c1, new Vector3(0, 0, -3f), 1.5f).setEaseInOutBack();
+        LeanTween.moveLocal(c1, new Vector3(850, 0, 0), 1.5f).setEaseInOutBack();
+        LeanTween.rotate(c2, new Vector3(0, 0, -3f), 1.5f).setEaseInOutBack();
+        LeanTween.moveLocal(c2, new Vector3(1250, 0, 0), 1.5f).setEaseInOutBack();
+        LeanTween.rotate(specialCard, new Vector3(0, 0, -3f), 1.5f).setEaseInOutBack();
+        LeanTween.moveLocal(specialCard, new Vector3(1650, 0, 0), 1.5f).setEaseInOutBack();
+    }
+
+    //判断并执行攻击逻辑
+    private void judgeBossAttack()
+    {
+        if (_curStats == SceneStats.BossRound1 && ifAttack() == -1)
+        {
+            BossAttack();
+        }
+        else if (_curStats == SceneStats.BossRound2 && ifAttack() != 0)
+        {
+            BossAttack();
+        }
+    }
+    private void BossAttack()
+    {
+        if (bossCard.GetComponent<Card>().cardStats == CardStats.rock)
+        {
+            UIManager.Instance.Player1Stats._curHp -= 5;
+            UIManager.Instance.Player2Stats._curHp -= 5;
+        }
+        else if (bossCard.GetComponent<Card>().cardStats == CardStats.scissors)
+        {
+            int i = Random.Range(0, 2);
+            if (i == 0)
+            {
+                UIManager.Instance.Player1Stats._curHp -= 10;
+            }
+            else
+            {
+                UIManager.Instance.Player2Stats._curHp -= 10;
+            }
+        }
+        else if (bossCard.GetComponent<Card>().cardStats == CardStats.paper)
+        {
+            UIManager.Instance.bossStats._curHp += 10;
+        }
+    }
+    private int ifAttack()
+    {
+        if (CardManager.Instance.CompareCardStats(bossCard.GetComponent<Card>(), playerCard1.GetComponent<Card>())
+            && CardManager.Instance.CompareCardStats(bossCard.GetComponent<Card>(), playerCard2.GetComponent<Card>()))
+        {
+            return 0;//两方都成功           
+        }
+        else if (CardManager.Instance.CompareCardStats(bossCard.GetComponent<Card>(), playerCard1.GetComponent<Card>())
+            || CardManager.Instance.CompareCardStats(bossCard.GetComponent<Card>(), playerCard2.GetComponent<Card>()))
+        {
+            if (CardManager.Instance.CompareCardStats(playerCard1.GetComponent<Card>(), playerCard2.GetComponent<Card>()))
+            {
+                return 1;//玩家1攻击玩家2
+            }
+            else
+            {
+                return 2;//玩家2攻击玩家1
+            }
+        }
+        else
+        {
+            Debug.Log("111");
+            return -1;//两方都失败
+        }
+    }
 }
+
+
 
 public enum SceneStats    
 {
