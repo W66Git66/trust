@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
-{
-    public NpcStats bossStats;
+{   public NpcStats bossStats;
     public NpcStats Player1Stats;
     public NpcStats Player2Stats;
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+    }
+
 }

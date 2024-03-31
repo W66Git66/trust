@@ -1,41 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< HEAD
-=======
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
->>>>>>> developOyy
 
-public class NpcStats : MonoBehaviour
+public class HealthBar : MonoBehaviour
 {
-    public float _curHp;
-    public float _MaxHp;
-    public int _curWealth;
-
-    public Sprite normal;
-    public Sprite getHurt;
-
-<<<<<<< HEAD
-=======
     public Image _hpImg;
     public Image _hpEffectImg;
 
+    public float _maxHealth;
+    public float _currentHealth;
     public float buffTime = 0.5f;
+
+    public float HpCoolDown = 1f;
 
     private Coroutine updateCoroutinel;
 
+
     private void Start()
     {
-        _curHp = _MaxHp;
+        _currentHealth = _maxHealth;
         UpdateHealthBar();
     }
 
-    private void Update()
+    public void SetHealth(float health)
     {
-        UpdateHealthBar();
-    }
-    public void SetHealth()
-    {
+        _currentHealth = Mathf.Clamp(health, 0f, _maxHealth);
 
         UpdateHealthBar();
 
@@ -43,7 +34,7 @@ public class NpcStats : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        _hpImg.fillAmount = _curHp / _MaxHp;
+        _hpImg.fillAmount = _currentHealth / _maxHealth;
 
         if (updateCoroutinel != null)
         {
@@ -66,6 +57,4 @@ public class NpcStats : MonoBehaviour
 
         _hpEffectImg.fillAmount = _hpImg.fillAmount;
     }
->>>>>>> developOyy
-
 }
