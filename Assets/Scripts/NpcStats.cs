@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< HEAD
-=======
 using UnityEngine.UI;
->>>>>>> developOyy
+
 
 public class NpcStats : MonoBehaviour
 {
@@ -14,9 +12,7 @@ public class NpcStats : MonoBehaviour
 
     public Sprite normal;
     public Sprite getHurt;
-
-<<<<<<< HEAD
-=======
+    public SpriteRenderer spriteRenderer;
     public Image _hpImg;
     public Image _hpEffectImg;
 
@@ -24,6 +20,10 @@ public class NpcStats : MonoBehaviour
 
     private Coroutine updateCoroutinel;
 
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     private void Start()
     {
         _curHp = _MaxHp;
@@ -66,6 +66,4 @@ public class NpcStats : MonoBehaviour
 
         _hpEffectImg.fillAmount = _hpImg.fillAmount;
     }
->>>>>>> developOyy
-
 }

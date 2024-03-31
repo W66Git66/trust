@@ -217,7 +217,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 136735081}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 076192d01fdf44248b02fb01d69b7ce9, type: 3}
+  m_Script: {fileID: 11500000, guid: fde2f714f367e26428f2d83480254974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _curHp: 100
@@ -225,6 +225,7 @@ MonoBehaviour:
   _curWealth: 0
   normal: {fileID: 21300000, guid: bf242fe3dc2e67847af7fe5b4ab38607, type: 3}
   getHurt: {fileID: 21300000, guid: fdd3661de546cb440aa1ecd6427aaf0a, type: 3}
+  spriteRenderer: {fileID: 136735083}
   _hpImg: {fileID: 1888392437}
   _hpEffectImg: {fileID: 295057068}
   buffTime: 0.5
@@ -640,7 +641,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 528973313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 076192d01fdf44248b02fb01d69b7ce9, type: 3}
+  m_Script: {fileID: 11500000, guid: fde2f714f367e26428f2d83480254974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _curHp: 100
@@ -648,6 +649,7 @@ MonoBehaviour:
   _curWealth: 0
   normal: {fileID: 21300000, guid: 3310a5df159d5f644add482070c071a1, type: 3}
   getHurt: {fileID: 21300000, guid: 762157dc0025c154a84daeac6d4083f6, type: 3}
+  spriteRenderer: {fileID: 528973315}
   _hpImg: {fileID: 2063231119}
   _hpEffectImg: {fileID: 1177043359}
   buffTime: 0.5
@@ -660,7 +662,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 743019113}
-  - component: {fileID: 743019112}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -668,21 +669,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &743019112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 743019111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 367fe886f7d4d454f9c6aa968ba97d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bossStats: {fileID: 136735085}
-  Player1Stats: {fileID: 1075757620}
-  Player2Stats: {fileID: 528973317}
 --- !u!4 &743019113
 Transform:
   m_ObjectHideFlags: 0
@@ -1211,7 +1197,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1075757616}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 076192d01fdf44248b02fb01d69b7ce9, type: 3}
+  m_Script: {fileID: 11500000, guid: fde2f714f367e26428f2d83480254974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _curHp: 100
@@ -1219,6 +1205,7 @@ MonoBehaviour:
   _curWealth: 0
   normal: {fileID: 21300000, guid: e0e0856fadcb29b47ac02c270fbf765a, type: 3}
   getHurt: {fileID: 21300000, guid: f9092ff2fe5661d46b23eb81934863e3, type: 3}
+  spriteRenderer: {fileID: 1075757618}
   _hpImg: {fileID: 769908287}
   _hpEffectImg: {fileID: 826393411}
   buffTime: 0.5
@@ -1873,6 +1860,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _curStats: 0
   bossAttackTime: 1
+  bossStats: {fileID: 136735085}
+  Player1Stats: {fileID: 1075757620}
+  Player2Stats: {fileID: 528973317}
 --- !u!4 &1693860238
 Transform:
   m_ObjectHideFlags: 0

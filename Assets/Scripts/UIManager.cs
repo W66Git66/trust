@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
-{   public NpcStats bossStats;
-    public NpcStats Player1Stats;
-    public NpcStats Player2Stats;
+{   
     protected override void Awake()
     {
         base.Awake();
@@ -15,5 +13,11 @@ public class UIManager : Singleton<UIManager>
     {
         base.OnDestroy();
     }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="npcStats">npc的状态</param>
+    /// <param name="damage">造成的伤害</param>
 
 }
