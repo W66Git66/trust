@@ -16,6 +16,8 @@ public class NpcStats : MonoBehaviour
     public Image _hpImg;
     public Image _hpEffectImg;
 
+    public Text text;
+
     public float buffTime = 0.5f;
 
     private Coroutine updateCoroutinel;
@@ -33,6 +35,10 @@ public class NpcStats : MonoBehaviour
     private void Update()
     {
         UpdateHealthBar();
+        if (text != null)
+        {            
+            text.text = _curWealth.ToString();
+        }
     }
     public void SetHealth()
     {
