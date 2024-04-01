@@ -31,6 +31,7 @@ public class UIManager : Singleton<UIManager>
 
     public void Return()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
 }

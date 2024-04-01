@@ -35,7 +35,8 @@ public class GameManager : Singleton<GameManager>
     public NpcStats Player1Stats;
     public NpcStats Player2Stats;
 
-    private int round=3;
+    private int round3=3;
+    private int round5 = 5;
 
     private void Update()
     {
@@ -54,12 +55,15 @@ public class GameManager : Singleton<GameManager>
 
                     if (bossAttackTime < 0)
                     {
-                        bossAttackTime = 3f;//怪物攻击间隔
-                        round -= 1;//回合数量减一
                         isBossRound1 = false;
+                        bossAttackTime = 3f;//怪物攻击间隔
+                        round3 -= 1;//回合数量减一
+                        Player1Stats.Jia();
+                        Player2Stats.Jia();
+                        
                         bossCard = CardManager.Instance.GetNormalCard(out c1, out c2);
+                       // Debug.Log(bossCard.GetComponent<Card>().cardStats);
                         specialCard = CardManager.Instance.GetSpecialCard();
-
                         moveCard();
                         _curStats = SceneStats.PlayerRound;
                     }
@@ -73,7 +77,9 @@ public class GameManager : Singleton<GameManager>
                     if (bossAttackTime < 0)
                     {
                         bossAttackTime = 3f;//怪物攻击间隔
-                        round -= 1;//回合数量减一
+                        round3 -= 1;//回合数量减一
+                        Player1Stats.Jia();
+                        Player2Stats.Jia();
                         isBossRound2 = false;
                         bossCard = CardManager.Instance.GetNormalCard(out c1, out c2);
                         specialCard = CardManager.Instance.GetSpecialCard();
@@ -117,7 +123,8 @@ public class GameManager : Singleton<GameManager>
                     if (Input.GetKeyDown(KeyCode.RightArrow))
                     {   
                         isPlayer2 = false;
-                        playerCard2 = specialCard; 
+                        playerCard2 = specialCard;
+                        //Debug.Log(playerCard2.GetComponent<Card>().cardStats);
                     }
                 }
                 if (isPlayer1 == false && isPlayer2 == false)
@@ -143,7 +150,6 @@ public class GameManager : Singleton<GameManager>
         {   
             yield return new WaitForSeconds(1f);
             _curStats = SceneStats.BossRound2;
-            Debug.Log("111");
         }
         judgeBossAttack();
         ReturnCard();
@@ -177,27 +183,26 @@ public class GameManager : Singleton<GameManager>
             {
                 BossAttack();
             }
-            if (ifAttack() == 1)
+            if (ifAttack() == 2)
             {
                 judgePlayerAttack(playerCard1, Player1Stats, Player2Stats);
                 //Player2钱数减少
             }
-            else if (ifAttack() == 2)
+            else if (ifAttack() == 1)
             {
                 judgePlayerAttack(playerCard2, Player2Stats, Player1Stats);
-
                 //Player1钱数减少
             }
         }
         else if (_curStats == SceneStats.BossRound2 && ifAttack() != 0)
         {
             BossAttack();
-            if (ifAttack() == 1)
+            if (ifAttack() == 2)
             {
                 judgePlayerAttack(playerCard1, Player1Stats, Player2Stats);
                 GetHurt(bossStats, 5f);
             }
-            else if (ifAttack() == 2)
+            else if (ifAttack() == 1)
             {
                 judgePlayerAttack(playerCard2, Player2Stats, Player1Stats);
                 //GetHurt(bossStats, 5f);
@@ -251,7 +256,8 @@ public class GameManager : Singleton<GameManager>
         {
             
             if (CardManager.Instance.CompareCardStats(playerCard1.GetComponent<Card>(), playerCard2.GetComponent<Card>()))
-            {  
+            {
+                Debug.Log("111");
                 return 1;//玩家1攻击玩家2
             }
             else
@@ -274,7 +280,11 @@ public class GameManager : Singleton<GameManager>
     IEnumerator ChangeSprite(NpcStats n)
     {
         n.spriteRenderer.sprite = n.getHurt;
-        yield return new WaitForSeconds(1f);
+        Color tempC= n.spriteRenderer.color;
+        n.spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        n.spriteRenderer.color = tempC;
+        yield return new WaitForSeconds(0.9f);
         n.spriteRenderer.sprite = n.normal;
     }
 
@@ -298,11 +308,18 @@ public class GameManager : Singleton<GameManager>
     /// <param name="p2">被偷钱</param>
     private void judgePlayerAttack(GameObject pc, NpcStats p1, NpcStats p2)
     {
-        if(round<=0)
+        if(round3<=0)
         {
+            round3 = 3;
             p1.text.enabled = true;
             p2.text.enabled = true;
         }
+        if(p2.isJia)
+        {
+            GetHurt(p1, 2);
+            GetHurt(p2, 2);
+        }
+        //不是特殊卡则进行普通计算
         if (pc.GetComponent<Card>().cardStats != CardStats.bu &&
                     pc.GetComponent<Card>().cardStats != CardStats.jia &&
                     pc.GetComponent<Card>().cardStats != CardStats.zhen)
@@ -314,21 +331,27 @@ public class GameManager : Singleton<GameManager>
             }
             if (p1._curWealth >= 10 && p2._curWealth >= 10)
             {
-                GetWealth(p1, p2, 10);
+                GetWealth(p2, p1, 10);
             }
-        }//不是特殊卡则进行普通计算
-        else if(pc.GetComponent<Card>().cardStats==CardStats.jia)
+        }
+        else if(pc.GetComponent<Card>().cardStats==CardStats.bu)
         {
-            GetWealth(p1, p2, 10);
+            GetWealth(p2, p1, 10);
         }
         else if(pc.GetComponent<Card>().cardStats == CardStats.zhen)
         {
-            round = 3;
+            round3 = 3;
             p1.text.enabled = false;
             p2.text.enabled = false;
         }
+        else if(pc.GetComponent<Card>().cardStats == CardStats.jia)
+        {
+            p2.isJia = true;              
+        }
+
     }
 }
+
 
 
 

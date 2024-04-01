@@ -18,6 +18,9 @@ public class NpcStats : MonoBehaviour
 
     public Text text;
 
+    public bool isJia;
+    public int round5 = 5;
+
     public float buffTime = 0.5f;
 
     private Coroutine updateCoroutinel;
@@ -72,4 +75,19 @@ public class NpcStats : MonoBehaviour
 
         _hpEffectImg.fillAmount = _hpImg.fillAmount;
     }
+
+    public void Jia()
+    {
+        if(isJia)
+        {
+            round5 -= 1;
+            _curWealth += 5;
+        }
+        if(round5 < 0)
+        {
+            round5 = 0;
+            isJia = false;
+        }
+    }
+
 }
