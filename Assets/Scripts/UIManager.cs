@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : Singleton<UIManager>
-{   
+{
+    public GameObject pauseUI;
     protected override void Awake()
     {
         base.Awake();
@@ -13,11 +16,21 @@ public class UIManager : Singleton<UIManager>
     {
         base.OnDestroy();
     }
-    
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="npcStats">npc的状态</param>
-    /// <param name="damage">造成的伤害</param>
 
+    public void Pause()
+    {
+        Time.timeScale = 0;
+        pauseUI.SetActive(true);
+    }
+
+    public void continuePause()
+    {
+        Time.timeScale = 1;
+        pauseUI.SetActive(false);
+    }
+
+    public void Return()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager> 
 { 
@@ -35,6 +35,8 @@ public class GameManager : Singleton<GameManager>
     public NpcStats Player1Stats;
     public NpcStats Player2Stats;
 
+    private int round=3;
+
     private void Update()
     {
         Round();
@@ -53,6 +55,7 @@ public class GameManager : Singleton<GameManager>
                     if (bossAttackTime < 0)
                     {
                         bossAttackTime = 3f;//怪物攻击间隔
+                        round -= 1;//回合数量减一
                         isBossRound1 = false;
                         bossCard = CardManager.Instance.GetNormalCard(out c1, out c2);
                         specialCard = CardManager.Instance.GetSpecialCard();
@@ -70,6 +73,7 @@ public class GameManager : Singleton<GameManager>
                     if (bossAttackTime < 0)
                     {
                         bossAttackTime = 3f;//怪物攻击间隔
+                        round -= 1;//回合数量减一
                         isBossRound2 = false;
                         bossCard = CardManager.Instance.GetNormalCard(out c1, out c2);
                         specialCard = CardManager.Instance.GetSpecialCard();
@@ -176,31 +180,12 @@ public class GameManager : Singleton<GameManager>
             if (ifAttack() == 1)
             {
                 judgePlayerAttack(playerCard1, Player1Stats, Player2Stats);
-                //if(playerCard1.GetComponent<Card>().cardStats!=CardStats.bu&&
-                //    playerCard1.GetComponent<Card>().cardStats != CardStats.jia&&
-                //    playerCard1.GetComponent<Card>().cardStats != CardStats.zhen)
-                //GetHurt(bossStats, 5f);
-                //if (bossStats._curWealth >= 5)
-                //{
-                //    GetWealth(Player2Stats, bossStats, 5);
-                //}
-                //if (Player1Stats._curWealth >=10 && Player2Stats._curWealth >= 10)
-                //{
-                //    GetWealth(Player1Stats, Player2Stats, 10);
-                //}
                 //Player2钱数减少
             }
             else if (ifAttack() == 2)
             {
-                GetHurt(bossStats, 5f);
-                if (bossStats._curWealth >= 5)
-                {
-                    GetWealth(Player1Stats, bossStats, 5);
-                }
-                if (Player1Stats._curWealth >= 10 && Player2Stats._curWealth >= 10)
-                {
-                    GetWealth(Player2Stats, Player1Stats, 10);
-                }
+                judgePlayerAttack(playerCard2, Player2Stats, Player1Stats);
+
                 //Player1钱数减少
             }
         }
@@ -209,30 +194,14 @@ public class GameManager : Singleton<GameManager>
             BossAttack();
             if (ifAttack() == 1)
             {
-
+                judgePlayerAttack(playerCard1, Player1Stats, Player2Stats);
                 GetHurt(bossStats, 5f);
-                if (bossStats._curWealth >= 5)
-                {
-                    GetWealth(Player2Stats, bossStats, 5);
-                }
-                if (Player1Stats._curWealth >= 10 && Player2Stats._curWealth >= 10)
-                {
-                    GetWealth(Player1Stats, Player2Stats, 10);
-                }
-                //Player2钱数减少
             }
             else if (ifAttack() == 2)
             {
-                GetHurt(bossStats, 5f);
-                if (bossStats._curWealth >= 5)
-                {
-                    GetWealth(Player1Stats, bossStats, 5);
-                }
-                if (Player1Stats._curWealth >= 10 && Player2Stats._curWealth >= 10)
-                {
-                    GetWealth(Player2Stats, Player1Stats, 10);
-                }
-                //Player1钱数减少
+                judgePlayerAttack(playerCard2, Player2Stats, Player1Stats);
+                //GetHurt(bossStats, 5f);
+
             }
         }
         if (ifAttack() == 0)
@@ -321,20 +290,42 @@ public class GameManager : Singleton<GameManager>
         npcStats2._curWealth -= damage;
 
     }
-
-    private void judgePlayerAttack(GameObject pc,NpcStats p1,NpcStats p2)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pc"></param>
+    /// <param name="p1"></param>
+    /// <param name="p2">被偷钱</param>
+    private void judgePlayerAttack(GameObject pc, NpcStats p1, NpcStats p2)
     {
+        if(round<=0)
+        {
+            p1.text.enabled = true;
+            p2.text.enabled = true;
+        }
         if (pc.GetComponent<Card>().cardStats != CardStats.bu &&
                     pc.GetComponent<Card>().cardStats != CardStats.jia &&
                     pc.GetComponent<Card>().cardStats != CardStats.zhen)
-            GetHurt(bossStats, 5f);
-        if (bossStats._curWealth >= 5)
         {
-            GetWealth(p2, bossStats, 5);
-        }
-        if (p1._curWealth >= 10 && p2._curWealth >= 10)
+            GetHurt(bossStats, 5f);
+            if (bossStats._curWealth >= 5)
+            {
+                GetWealth(p2, bossStats, 5);
+            }
+            if (p1._curWealth >= 10 && p2._curWealth >= 10)
+            {
+                GetWealth(p1, p2, 10);
+            }
+        }//不是特殊卡则进行普通计算
+        else if(pc.GetComponent<Card>().cardStats==CardStats.jia)
         {
             GetWealth(p1, p2, 10);
+        }
+        else if(pc.GetComponent<Card>().cardStats == CardStats.zhen)
+        {
+            round = 3;
+            p1.text.enabled = false;
+            p2.text.enabled = false;
         }
     }
 }
