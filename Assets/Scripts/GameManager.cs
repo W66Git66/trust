@@ -258,11 +258,11 @@ public class GameManager : Singleton<GameManager>
             if (CardManager.Instance.CompareCardStats(playerCard1.GetComponent<Card>(), playerCard2.GetComponent<Card>()))
             {
                 Debug.Log("111");
-                return 1;//Íæ¼Ò1¹¥»÷Íæ¼Ò2
+                return 1;//Íæ¼Ò2¹¥»÷Íæ¼Ò1
             }
             else
             {
-                return 2;//Íæ¼Ò2¹¥»÷Íæ¼Ò1
+                return 2;//Íæ¼Ò1¹¥»÷Íæ¼Ò2
             }
         }
         else

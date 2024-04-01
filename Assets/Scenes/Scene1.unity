@@ -393,6 +393,8 @@ MonoBehaviour:
   _hpImg: {fileID: 1888392437}
   _hpEffectImg: {fileID: 295057068}
   text: {fileID: 0}
+  isJia: 0
+  round5: 5
   buffTime: 0.5
 --- !u!1 &196222615
 GameObject:
@@ -849,7 +851,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 3310a5df159d5f644add482070c071a1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e0e0856fadcb29b47ac02c270fbf765a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -891,12 +893,14 @@ MonoBehaviour:
   _curHp: 40
   _MaxHp: 40
   _curWealth: 20
-  normal: {fileID: 21300000, guid: 3310a5df159d5f644add482070c071a1, type: 3}
-  getHurt: {fileID: 21300000, guid: 762157dc0025c154a84daeac6d4083f6, type: 3}
+  normal: {fileID: 21300000, guid: e0e0856fadcb29b47ac02c270fbf765a, type: 3}
+  getHurt: {fileID: 21300000, guid: f9092ff2fe5661d46b23eb81934863e3, type: 3}
   spriteRenderer: {fileID: 528973315}
   _hpImg: {fileID: 2063231119}
   _hpEffectImg: {fileID: 1177043359}
   text: {fileID: 111873441}
+  isJia: 0
+  round5: 5
   buffTime: 0.5
 --- !u!1 &743019111
 GameObject:
@@ -1620,7 +1624,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: e0e0856fadcb29b47ac02c270fbf765a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3310a5df159d5f644add482070c071a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1662,12 +1666,14 @@ MonoBehaviour:
   _curHp: 40
   _MaxHp: 40
   _curWealth: 20
-  normal: {fileID: 21300000, guid: e0e0856fadcb29b47ac02c270fbf765a, type: 3}
-  getHurt: {fileID: 21300000, guid: f9092ff2fe5661d46b23eb81934863e3, type: 3}
+  normal: {fileID: 21300000, guid: 3310a5df159d5f644add482070c071a1, type: 3}
+  getHurt: {fileID: 21300000, guid: 762157dc0025c154a84daeac6d4083f6, type: 3}
   spriteRenderer: {fileID: 1075757618}
   _hpImg: {fileID: 769908287}
   _hpEffectImg: {fileID: 826393411}
   text: {fileID: 758686096}
+  isJia: 0
+  round5: 5
   buffTime: 0.5
 --- !u!1 &1159653209
 GameObject:
@@ -2435,7 +2441,7 @@ GameObject:
   - component: {fileID: 1608053330}
   - component: {fileID: 1608053329}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Pause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
