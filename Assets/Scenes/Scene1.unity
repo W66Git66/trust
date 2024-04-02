@@ -396,6 +396,7 @@ MonoBehaviour:
   isJia: 0
   round5: 5
   buffTime: 0.5
+  StarEffect1: {fileID: 0}
 --- !u!1 &196222615
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,6 +914,7 @@ MonoBehaviour:
   isJia: 0
   round5: 5
   buffTime: 0.5
+  StarEffect1: {fileID: 1171714702}
 --- !u!1 &569900143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1767,6 +1769,7 @@ MonoBehaviour:
   isJia: 0
   round5: 5
   buffTime: 0.5
+  StarEffect1: {fileID: 273019906}
 --- !u!1 &1159653209
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,8 +2833,6 @@ MonoBehaviour:
   bossStats: {fileID: 136735085}
   Player1Stats: {fileID: 1075757620}
   Player2Stats: {fileID: 528973317}
-  StarEffect1: {fileID: 273019906}
-  StarEffect2: {fileID: 1171714702}
 --- !u!4 &1693860238
 Transform:
   m_ObjectHideFlags: 0

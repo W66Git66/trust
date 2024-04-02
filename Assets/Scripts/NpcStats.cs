@@ -24,6 +24,7 @@ public class NpcStats : MonoBehaviour
     public float buffTime = 0.5f;
 
     private Coroutine updateCoroutinel;
+    public GameObject StarEffect1; //ÐÇÐÇÌØÐ§1
 
     private void Awake()
     {

@@ -34,8 +34,7 @@ public class GameManager : Singleton<GameManager>
     public NpcStats bossStats;
     public NpcStats Player1Stats;
     public NpcStats Player2Stats;
-    public GameObject StarEffect1; //星星特效1
-    public GameObject StarEffect2; //星星特效2
+ //星星特效2
 
 
     private int round3 = 3;
@@ -305,22 +304,18 @@ public class GameManager : Singleton<GameManager>
     }
     IEnumerator ChangeSprite(NpcStats n)
     {
-        if (n = Player2Stats)                  //增加受击特效的触发
-        {
-            StarEffect2.SetActive(true);
-            Debug.Log("2");
-        }
-        if(n=Player1Stats)
-        {
-            StarEffect1.SetActive(true);
-            Debug.Log("1");
-        }
         n.spriteRenderer.sprite = n.getHurt;
+        if (n.StarEffect1 != null)
+        {
+            n.StarEffect1.SetActive(true);
+        }
         yield return new WaitForSeconds(1f);
         n.spriteRenderer.sprite = n.normal;
-        yield return new WaitForSeconds(2f);    //增加了受击特效的褪去
-        StarEffect1.SetActive(false);
-        StarEffect2.SetActive(false);
+        yield return new WaitForSeconds(2f);
+        if (n.StarEffect1 != null)
+        {
+            n.StarEffect1.SetActive(false);//增加了受击特效的褪去
+        }
     }
 
     /// <summary>
