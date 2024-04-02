@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class UIManager : Singleton<UIManager>
 {
     public GameObject pauseUI;
+    public GameObject specificationUI;
+
+    public GameObject showTiShi;
     protected override void Awake()
     {
         base.Awake();
@@ -15,6 +18,15 @@ public class UIManager : Singleton<UIManager>
     protected override void OnDestroy()
     {
         base.OnDestroy();
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            showTiShi.SetActive(false);
+            Time.timeScale = 1;
+        }
     }
 
     public void Pause()
@@ -33,5 +45,11 @@ public class UIManager : Singleton<UIManager>
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    public void TiShi()
+    {
+        showTiShi.SetActive(true);
+        Time.timeScale = 0;
     }
 }
