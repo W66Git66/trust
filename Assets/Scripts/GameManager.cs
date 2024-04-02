@@ -188,6 +188,11 @@ public class GameManager : Singleton<GameManager>
                 BossAttack();
                 SpecialCard(playerCard1, Player2Stats, Player1Stats);
                 SpecialCard(playerCard2, Player1Stats, Player2Stats);
+                if(playerCard1.GetComponent<Card>().cardStats==CardStats.bu&& playerCard2.GetComponent<Card>().cardStats == CardStats.bu)
+                {
+                    GetHurt(Player1Stats, 10);
+                    GetHurt(Player2Stats, 10);
+                }
             }
             if (ifAttack() == 2)
             {
@@ -226,7 +231,7 @@ public class GameManager : Singleton<GameManager>
         {
             GetHurt(bossStats, 10f);
 
-            if (bossStats._curWealth >= 5)
+            if (bossStats._curWealth >= 10)
             {
                 GetWealth(Player1Stats, bossStats, 5);
                 GetWealth(Player2Stats, bossStats, 5);
@@ -298,11 +303,7 @@ public class GameManager : Singleton<GameManager>
     IEnumerator ChangeSprite(NpcStats n)
     {
         n.spriteRenderer.sprite = n.getHurt;
-        Color tempC = n.spriteRenderer.color;
-        n.spriteRenderer.color = Color.white;
-        yield return new WaitForSeconds(0.1f);
-        n.spriteRenderer.color = tempC;
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(1f);
         n.spriteRenderer.sprite = n.normal;
     }
 
@@ -339,11 +340,9 @@ public class GameManager : Singleton<GameManager>
 
     private void SpecialCard(GameObject pc, NpcStats p1, NpcStats p2)
     {
-
-
-        if (pc.GetComponent<Card>().cardStats == CardStats.bu)
+      if (pc.GetComponent<Card>().cardStats == CardStats.bu)
         {
-            GetWealth(p2, p1, 10);
+            GetWealth(p1, p2, 10);
         }
         else if (pc.GetComponent<Card>().cardStats == CardStats.zhen)
         {
@@ -353,7 +352,7 @@ public class GameManager : Singleton<GameManager>
         }
         else if (pc.GetComponent<Card>().cardStats == CardStats.jia)
         {
-            p2.isJia = true;
+            p1.isJia = true;
         }
     }
 
