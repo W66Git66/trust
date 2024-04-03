@@ -253,11 +253,11 @@ public class GameManager : Singleton<GameManager>
             int i = Random.Range(0, 2);
             if (i == 0)
             {
-                GetHurt(Player1Stats, 10f);
+                GetHurt(Player2Stats, 10f);
             }
             else
             {
-                GetHurt(Player2Stats, 10f);
+                GetHurt(Player1Stats, 10f);
             }
         }
         else if (bossCard.GetComponent<Card>().cardStats == CardStats.paper)

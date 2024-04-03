@@ -908,8 +908,8 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: e0e0856fadcb29b47ac02c270fbf765a, type: 3}
   getHurt: {fileID: 21300000, guid: f9092ff2fe5661d46b23eb81934863e3, type: 3}
   spriteRenderer: {fileID: 528973315}
-  _hpImg: {fileID: 2063231119}
-  _hpEffectImg: {fileID: 1177043359}
+  _hpImg: {fileID: 769908287}
+  _hpEffectImg: {fileID: 826393411}
   text: {fileID: 111873441}
   isJia: 0
   round5: 5
@@ -1763,8 +1763,8 @@ MonoBehaviour:
   normal: {fileID: 21300000, guid: 3310a5df159d5f644add482070c071a1, type: 3}
   getHurt: {fileID: 21300000, guid: 762157dc0025c154a84daeac6d4083f6, type: 3}
   spriteRenderer: {fileID: 1075757618}
-  _hpImg: {fileID: 769908287}
-  _hpEffectImg: {fileID: 826393411}
+  _hpImg: {fileID: 2063231119}
+  _hpEffectImg: {fileID: 1177043359}
   text: {fileID: 758686096}
   isJia: 0
   round5: 5
@@ -3760,12 +3760,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
